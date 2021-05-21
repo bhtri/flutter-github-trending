@@ -23,14 +23,35 @@ class ChartItem extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Container(
-            child: Text(
-              '$rank',
-              style: TextStyle(
-                fontSize: ScreenUtil().setSp(40),
-                fontWeight: FontWeight.bold,
-                color: Color(0xff3b3647),
+          Expanded(
+            flex: 1,
+            child: Container(
+              child: Text(
+                '$rank',
+                style: TextStyle(
+                  fontSize: ScreenUtil().setSp(40),
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xff3b3647),
+                ),
               ),
+            ),
+          ),
+          Expanded(
+            flex: 3,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  child: Text(data.language), // 17:59
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Column(
+              children: [],
             ),
           ),
         ],

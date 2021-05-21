@@ -88,7 +88,14 @@ class _ChartScreenState extends State<ChartScreen> {
                         AsyncSnapshot<List<RepositoryModel>> snapshot2) {
                       if (snapshot2.connectionState == ConnectionState.done) {
                         if (snapshot2.hasData) {
-                          return ChartItem(rank: 1, data: snapshot2.data![0]);
+                          return ListView.builder(
+                            itemBuilder: (context, index) {
+                              return ChartItem(
+                                rank: index + 1,
+                                data: snapshot2.data![index],
+                              );
+                            },
+                          );
                         } else {
                           return Center(
                             child: Text('Empty'),
