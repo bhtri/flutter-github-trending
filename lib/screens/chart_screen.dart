@@ -1,8 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:gittrend/blocs/repository_bloc.dart';
+import 'package:gittrend/models/chart_model.dart';
 import 'package:gittrend/widgets/group_button.dart';
+import 'package:provider/provider.dart';
 
-class ChartScreen extends StatelessWidget {
+class ChartScreen extends StatefulWidget {
+  @override
+  _ChartScreenState createState() => _ChartScreenState();
+}
+
+class _ChartScreenState extends State<ChartScreen> {
+  RepositoriesBloc bloc;
+  ChartModel chartModel;
+
+  @override
+  void initState() {
+    super.initState();
+    chartModel = Provider.of<ChartModel>(context, listen: false);
+    bloc = Provider.of<RepositoriesBloc>(context, listen: false);
+    bloc.fetchTrendingRepositories(chartModel);
+  }
+
+  @override
+  void dispose() {
+    bloc.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     ScreenUtil.init(
