@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gittrend/blocs/repository_bloc.dart';
 import 'package:gittrend/models/chart_model.dart';
+import 'package:gittrend/models/repository_model.dart';
+import 'package:gittrend/widgets/chart_item.dart';
 import 'package:gittrend/widgets/group_button.dart';
 import 'package:provider/provider.dart';
 
@@ -11,8 +13,8 @@ class ChartScreen extends StatefulWidget {
 }
 
 class _ChartScreenState extends State<ChartScreen> {
-  RepositoriesBloc bloc;
-  ChartModel chartModel;
+  late RepositoriesBloc bloc;
+  late ChartModel chartModel;
 
   @override
   void initState() {
@@ -26,6 +28,12 @@ class _ChartScreenState extends State<ChartScreen> {
   void dispose() {
     bloc.dispose();
     super.dispose();
+  }
+
+  Widget _loadingWidget() {
+    return Center(
+      child: CircularProgressIndicator(),
+    );
   }
 
   @override
@@ -63,10 +71,40 @@ class _ChartScreenState extends State<ChartScreen> {
             ),
             child: GroupButton(
               onPressed: (since) {
-                print(since.toString());
+                chartModel.since = since;
+                bloc.fetchTrendingRepositories(chartModel);
               },
             ),
           ),
+          Expanded(
+            child: StreamBuilder(
+              stream: bloc.trendingRepositories,
+              builder: (BuildContext context,
+                  AsyncSnapshot<Future<List<RepositoryModel>>> snapshot1) {
+                if (snapshot1.hasData) {
+                  return FutureBuilder(
+                    future: snapshot1.data,
+                    builder: (context,
+                        AsyncSnapshot<List<RepositoryModel>> snapshot2) {
+                      if (snapshot2.connectionState == ConnectionState.done) {
+                        if (snapshot2.hasData) {
+                          return ChartItem(rank: 1, data: snapshot2.data![0]);
+                        } else {
+                          return Center(
+                            child: Text('Empty'),
+                          );
+                        }
+                      } else {
+                        return _loadingWidget();
+                      }
+                    },
+                  );
+                } else {
+                  return _loadingWidget();
+                }
+              },
+            ),
+          )
         ],
       ),
     );
