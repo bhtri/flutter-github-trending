@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gittrend/models/repository_model.dart';
+import 'package:gittrend/utils/constants.dart';
 
 class ChartItem extends StatelessWidget {
   final int rank;
@@ -43,15 +44,78 @@ class ChartItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
-                  child: Text(data.language), // 17:59
+                  padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                  decoration: BoxDecoration(
+                    color: Constants.fromHex(
+                        data.language.isEmpty ? '#000000' : data.languageColor),
+                    borderRadius: BorderRadius.circular(15),
+                  ),
+                  child: Text(
+                    data.language.isEmpty ? 'Empty' : data.language,
+                    style: TextStyle(
+                      fontSize: ScreenUtil().setSp(20),
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+                Text(
+                  data.name,
+                  style: TextStyle(
+                    fontSize: ScreenUtil().setSp(20),
+                    fontWeight: FontWeight.w400,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+                Text(
+                  data.author,
+                  style: TextStyle(
+                    fontSize: ScreenUtil().setSp(15),
+                    fontWeight: FontWeight.w400,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+                SizedBox(height: ScreenUtil().setHeight(5)),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.star_border,
+                      size: ScreenUtil().setSp(15),
+                    ),
+                    Text(
+                      '${data.stars}',
+                      style: TextStyle(
+                        fontSize: ScreenUtil().setSp(12),
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                    SizedBox(width: ScreenUtil().setWidth(5)),
+                    Icon(
+                      Icons.share,
+                      size: ScreenUtil().setSp(15),
+                    ),
+                    Text(
+                      '${data.forks}',
+                      style: TextStyle(
+                        fontSize: ScreenUtil().setSp(12),
+                        fontWeight: FontWeight.w300,
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
           ),
           Expanded(
             flex: 1,
-            child: Column(
-              children: [],
+            child: Container(
+              padding: EdgeInsets.all(ScreenUtil().setWidth(5)),
+              child: ClipOval(
+                child: Image.network(
+                  '${data.avatar}',
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
           ),
         ],

@@ -89,10 +89,18 @@ class _ChartScreenState extends State<ChartScreen> {
                       if (snapshot2.connectionState == ConnectionState.done) {
                         if (snapshot2.hasData) {
                           return ListView.builder(
+                            itemCount: snapshot2.data!.length,
+                            padding: EdgeInsets.zero,
                             itemBuilder: (context, index) {
-                              return ChartItem(
-                                rank: index + 1,
-                                data: snapshot2.data![index],
+                              return Container(
+                                padding: EdgeInsets.symmetric(
+                                  vertical: ScreenUtil().setHeight(5),
+                                  horizontal: ScreenUtil().setWidth(10),
+                                ),
+                                child: ChartItem(
+                                  rank: index + 1,
+                                  data: snapshot2.data![index],
+                                ),
                               );
                             },
                           );

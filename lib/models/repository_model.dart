@@ -19,9 +19,9 @@ class RepositoryModel {
     String description = '',
     String language = '',
     String languageColor = '',
-    int stars = -1,
-    int forks = -1,
-    int currentPeriodStars = -1,
+    String stars = '',
+    String forks = '',
+    String currentPeriodStars = '',
     required List<BuiltBy> builtBy,
   }) {
     this._author = author;
@@ -51,11 +51,11 @@ class RepositoryModel {
 
   String get languageColor => _languageColor;
 
-  int get stars => _stars;
+  String get stars => _stars;
 
-  int get forks => _forks;
+  String get forks => _forks;
 
-  int get currentPeriodStars => _currentPeriodStars;
+  String get currentPeriodStars => _currentPeriodStars;
 
   List<BuiltBy> get builtBy => _builtBy;
 
