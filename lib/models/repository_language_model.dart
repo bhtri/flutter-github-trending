@@ -4,9 +4,9 @@ class RepositoryLanguageModel {
   String name;
 
   RepositoryLanguageModel({
-    required this.name,
-    required this.color,
-    required this.urlParam,
+    this.name = 'All',
+    this.color = '',
+    this.urlParam = '',
   });
 
   factory RepositoryLanguageModel.fromJson(Map<String, dynamic> json) {

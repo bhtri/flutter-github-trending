@@ -3,8 +3,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gittrend/blocs/repository_bloc.dart';
 import 'package:gittrend/models/chart_model.dart';
 import 'package:gittrend/models/repository_model.dart';
+import 'package:gittrend/utils/constants.dart';
 import 'package:gittrend/widgets/chart_item.dart';
 import 'package:gittrend/widgets/group_button.dart';
+import 'package:gittrend/widgets/language_label.dart';
 import 'package:provider/provider.dart';
 
 class ChartScreen extends StatefulWidget {
@@ -52,13 +54,57 @@ class _ChartScreenState extends State<ChartScreen> {
           Container(
             margin: EdgeInsets.only(top: ScreenUtil().setHeight(50)),
             height: ScreenUtil().setHeight(80),
-            alignment: Alignment.center,
-            child: Text(
-              'Gitboard',
-              style: TextStyle(
-                fontSize: ScreenUtil().setSp(40),
-                fontWeight: FontWeight.bold,
-              ),
+            child: Stack(
+              children: [
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  child: PopupMenuButton(
+                    onSelected: (value) {
+                      print(value);
+                    },
+                    child: Icon(Icons.more_vert),
+                    itemBuilder: (context) {
+                      return Constants.languages.map((language) {
+                        return PopupMenuItem(
+                          child: Text(language.name),
+                          value: language,
+                        );
+                      }).toList();
+                    },
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Text(
+                        'Gitboard',
+                        style: TextStyle(
+                          fontSize: ScreenUtil().setSp(40),
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      StreamBuilder<Object>(
+                        stream: null,
+                        builder: (context, snapshot) {
+                          String language = 'All';
+                          String color = '#000000';
+
+                          if (snapshot.hasData) {
+                            // language = snapshot.data.language;
+                            // color = snapshot.data.color;
+                          }
+
+                          return LanguageLabel(
+                              color: color, language: language);
+                        },
+                      ),
+                    ],
+                  ),
+                )
+              ],
             ),
           ),
           Container(
