@@ -62,6 +62,7 @@ class _ChartScreenState extends State<ChartScreen> {
             ),
           ),
           Container(
+            margin: EdgeInsets.only(bottom: ScreenUtil().setHeight(10)),
             width: ScreenUtil().setWidth(310),
             height: ScreenUtil().setHeight(40),
             alignment: Alignment.center,

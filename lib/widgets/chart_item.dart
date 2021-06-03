@@ -34,6 +34,7 @@ class ChartItem extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   color: Color(0xff3b3647),
                 ),
+                textAlign: TextAlign.center,
               ),
             ),
           ),
